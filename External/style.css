@@ -1,0 +1,93 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+}
+
+.page-header {
+    background-color: #4CAF50;
+    padding: 15px;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.header-list {
+    display: flex;
+    align-items: center;
+}
+
+.header-item {
+    margin-right: 20px;
+}
+
+.ehr-logo, .home-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.patient-info, .records-management {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.patient-details label {
+    margin-right: 10px;
+}
+
+.patient-details input {
+    margin-right: 20px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.record-options {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.records-table th, .records-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.records-table th {
+    background-color: #f2f2f2;
+}
+
+.records-table td button {
+    background-color: #f44336;
+}
+
+.records-table td button:hover {
+    background-color: #d32f2f;
+}

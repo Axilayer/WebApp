@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard_style.css') }}">
+</head>
+
+<body>
+    <!--Header-->
+    <header class="header_bar">
+        <h1>Axilayer Technologies</h1>
+        <h2>Dashboard</h2>
+    </header>
+
+    <div class="main_page">
+        <div class="panel"></div>
+        <div>
+            <main class="main_element">
+                <!--EHR-->
+                <div class="btn">
+                    <a href="{{ url_for('ehr_fisr_page') }}">
+                        <h2>EHR</h2>
+                        <img src="{{ url_for('static', filename='images/medical_records.jpg') }}" alt="Medical Records Logo">
+                    </a>
+                </div>
+
+                <div class="btn">
+                    <a href="{{ url_for('hospital_notification') }}">
+                        <h2>Hospital Notification</h2>
+                        <img src="{{ url_for('static', filename='images/notification_img.jpeg') }}" alt="Notification Logo">
+                    </a>
+                </div>
+
+                <!--Inventory management -->
+                <div class="btn">
+                    <a href="{{ url_for('inventory_management') }}" class="btn_item">
+                        <h2>Inventory Management</h2>
+                        <img src="{{ url_for('static', filename='images/inventory.png') }}" alt="Inventory Logo" class="dash_logo">
+                    </a>
+                </div>
+
+                <!--Dosage calculation-->
+                <div class="btn">
+                    <a href="{{ url_for('dosage_protocol') }}">
+                        <h2>Dosage/Protocol</h2>
+                        <img src="{{ url_for('static', filename='images/dosage_calculation.jpg') }}" alt="Dosage Logo">
+                    </a>
+                </div>
+
+                <div class="btn">
+                    <a href="{{ url_for('settings') }}">
+                        <h2>Setting</h2>
+                        <img src="{{ url_for('static', filename='images/setting.jpeg') }}" alt="Setting Logo">
+                    </a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}" async defer></script>
+</body>
+</html>

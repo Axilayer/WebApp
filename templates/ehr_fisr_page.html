@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>EHR Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ehr_style.css') }}">
+</head>
+
+<body>
+    <header class="page-header">
+        <nav>
+            <ul class="nav_list">
+                <li class="nav_list_item">
+                    <img src="{{ url_for('static', filename='images/Company_logo.PNG') }}" alt="Company Logo">
+                </li>
+                <li class="nav_list_item"></li>
+
+                <li class="nav_list_item">
+                    <a href="{{ url_for('dashboard') }}" class="home_btn">
+                        <img src="{{ url_for('static', filename='images/simple-home-button-icon-vector.jpg') }}" alt="Home logo">
+                    </a>
+                </li>
+                <li class="ehr_name">
+                    <h2>EHR</h2>
+                </li>
+
+                <li class="provider_name">
+                    <label for="provider">Provider Name: </label>
+                    <input type="text" id="provider" placeholder="Doe, John">
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="patient-info">
+        <div class="draft_historical">
+            <select class="draft_historical_items">
+                <option value="">Current Draft</option>
+                <option value="">Historical Documentation</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="records-management">
+        <table class="records-table" id="records-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Patient Name</th>
+                    <th>Incident Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="record-entries">
+                <!-- Records will be dynamically added here -->
+            </tbody>
+        </table>
+    </section>
+    <div class="record-options">
+        <a href="{{ url_for('ehr_form') }}" id="new-record-btn">Create Record</a>
+        <a href="{{ url_for('home') }}" id="import-record">Import</a>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}" async defer></script>
+</body>
+
+</html>

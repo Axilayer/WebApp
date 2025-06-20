@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EHR Page</title>
+    <meta name="description" content="Electronic Health Record Form Page">
+    <!-- External CSS link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='ehr_style.css') }}">
+</head>
+
+<body>
+
+    <!-- Header Container-->
+    <header class="page-header">
+        <nav>
+            <ul class="nav_list">
+
+                <!-- Company Logo-->
+                <li class="nav_list_item">
+                    <img src="{{ url_for('static', filename='images/Company_logo.PNG') }}" alt="Company Logo">
+                </li>
+
+                <!-- Home button-->
+                <li class="nav_list_item">
+                    <a href="{{ url_for('dashboard') }}" class="home_btn">
+                        <img src="{{ url_for('static', filename='images/simple-home-button-icon-vector.jpg') }}" alt="Home logo">
+                    </a>
+                </li>
+
+                <!-- Page name-->
+                <li class="ehr_name">
+                    <h2>EHR</h2>
+                </li>
+
+                <!-- Provider Name (Patient Name)-->
+                <li class="provider_name">
+                    <label for="provider">Patient Name: </label>
+                    <input type="text" id="provider" placeholder="Doe, John">
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main form for the Patient-->
+    <form action="" method="post" class="ehr_main_form">
+
+        <!--Form main tabs-->
+        <div class="my_tabs">
+
+            <!-- ------------------Situation Tab-------------------------->
+            <!-- Tab header for Situation -->
+            <input type="radio" id="situattion_tab" name="form_tabs" checked="checked">
+            <label for="situattion_tab">
+                <img src="{{ url_for('static', filename='images/alert.jpg') }}" alt="Alert logo">
+                <div>Situation</div>
+            </label>
+
+            <!-- Tab content for Situation-->
+            <div class="tab">
+                <h2>Situation Report
+                    <img src="{{ url_for('static', filename='images/mic.jpg') }}" alt="Microphone icon" id="mic">
+                </h2>
+
+                <!-- Patient Information Section -->
+                <div id="who">
+                    <div class="uto_label">
+                        <input type="radio" id="uto_pt_info">
+                        <label for="uto_pt_info">UTO</label>
+                    </div>
+                    <h3>Patient Information</h3>
+                    <table class="records-table" id="records-table">
+                        <thead>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Age (years)</th>
+                                <th>Birth Date</th>
+                                <th>Sex</th>
+                                <th>Race/Ethnicity</th>
+                                <th>Phone Number</th>
+                                <th>Social Security Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" placeholder="John Doe"></td>
+                                <td><input type="number" placeholder="56"></td>
+                                <td><input type="date"></td>
+                                <td><input type="text" placeholder="Male/Female"></td>
+                                <td><input type="text" placeholder="White/Non-Hispanic"></td>
+                                <td><input type="tel" placeholder="(555) 555-5555"></td>
+                                <td><input type="number" placeholder="000-00-0000"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reported Chief Complaint -->
+                <div>
+                    <h3>Reported Chief Complaint</h3>
+                    <textarea id="chieft_complaint"
+                        placeholder="The patient is complaining of sudden onset, sharp, stabbing chest pain..."></textarea>
+                </div>
+
+                <!-- Location Section -->
+                <div>
+                    <h3>Location</h3>
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>Street</th>
+                                <th>Apt Number</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Zip Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" placeholder="4500 Mills Park Cir"></td>
+                                <td><input type="number" placeholder="3535"></td>
+                                <td><input type="text" placeholder="College Station"></td>
+                                <td><input type="text" placeholder="TX"></td>
+                                <td><input type="text" placeholder="77845"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109904.02584001253!2d-96.51087999343873!3d30.591634472224843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86468308f4a3319d%3A0xb42133a4d8c339d4!2sCollege%20Station%20Fire%20Station%20%234!5e0!3m2!1sen!2sus!4v1740265977532!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+                <!-- Safety Considerations -->
+                <div>
+                    <h3>Safety Consideration</h3>
+                    <textarea id="safety" placeholder="No known threat is reported. Always stay vigilant."></textarea>
+                </div>
+            </div>
+
+            <!-- ------------------Assessment Tab-------------------------->
+            <input type="radio" id="assessment" name="form_tabs">
+            <label for="assessment">
+                <img src="{{ url_for('static', filename='images/pt ino.jpg') }}" alt="Patient information logo">
+                <div>Assessment/
+                    Treatment
+                </div>
+            </label>
+
+            <!-- Tab content for Assessment -->
+            <div class="tab">
+                <h2>Assessment
+                    <img src="{{ url_for('static', filename='images/mic.jpg') }}" alt="Microphone icon" id="mic">
+                </h2>
+
+                <!-- Level of Consciousness -->
+                <div>
+                    <h3>Level of Consciousness</h3>
+                    <div class="avpu">
+                        <select id="apvu_score">
+                            <option value="">A: The patient was alert and conscious</option>
+                            <option value="">V: The patient only responded to verbal stimuli</option>
+                            <option value="">P: The patient only responded to pain stimuli</option>
+                            <option value="">U: The patient did not respond to stimuli</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Vital Signs Section -->
+                <div class="vital_sign_tab">
+                    <h3>Vital Signs</h3>
+
+                    <!-- Blood Pressure Tab -->
+                    <input type="radio" id="bp_tab" name="vital_sign_tab" checked="checked">
+                    <label for="bp_tab">
+                        <div>Blood Pressure</div>
+                        <input type="number" placeholder="180">
+                    </label>
+
+                    <!-- Additional Vital Signs Information (e.g., Pulse, Respirations) -->
+                    <div class="tab">
+                        <input type="time" placeholder="Time">
+                    </div>
+                </div>
+
+                <!-- Additional Physical Assessment Sections -->
+                <div>Physical Assessment</div>
+                <div>Weight</div>
+                <div>Height</div>
+                <div>Allergies</div>
+                <div>Medication</div>
+                <div>Clinical Findings</div>
+                <div>Treatment</div>
+                <div>Reassessment</div>
+                <div>Belongings</div>
+            </div>
+
+            <!-- ------------------Narrative Tab-------------------------->
+            <input type="radio" id="narrative" name="form_tabs">
+            <label for="narrative">
+                <img src="{{ url_for('static', filename='images/Narrative.png') }}" alt="Narrative icon">
+                <div>Narrative</div>
+            </label>
+
+            <!-- Tab content for Narrative -->
+            <div class="tab">
+                <h2>Narrative
+                    <img src="{{ url_for('static', filename='images/mic.jpg') }}" alt="Microphone icon" id="mic">
+                </h2>
+                <button class="main_btn">
+                    <a href="{{ url_for('record_audio') }}">Record, Upload and Transcribe Audio</a>
+                </button>
+                <textarea id="narrative_section" placeholder="This section is based on agency narrative format..."></textarea>
+            </div>
+
+            <!-- ------------------Incident Report Tab-------------------------->
+            <input type="radio" id="incident_report" name="form_tabs">
+            <label for="incident_report">
+                <img src="{{ url_for('static', filename='images/report.jpg') }}" alt="Report icon">
+                <div>Incident Report</div>
+            </label>
+            <div class="tab">
+                <h2>Incident Report</h2>
+            </div>
+
+            <!-- ------------------Speciality Form Tab-------------------------->
+            <input type="radio" id="speciality_form" name="form_tabs">
+            <label for="speciality_form">
+                <img src="{{ url_for('static', filename='images/special report.jpg') }}" alt="Speciality form icon">
+                <div>Speciality Form</div>
+            </label>
+            <div class="tab">
+                <h2>Speciality Form</h2>
+                <!-- Speciality form content here -->
+            </div>
+
+            <!-- ------------------Billing Info Tab-------------------------->
+            <input type="radio" id="billing_info" name="form_tabs">
+            <label for="billing_info">
+                <img src="{{ url_for('static', filename='images/billing.jpg') }}" alt="Billing icon">
+                <div>Billing</div>
+            </label>
+            <div class="tab">
+                <h2>Billing</h2>
+                <!-- Billing info content here -->
+            </div>
+
+            <!-- ------------------Signature Info Tab-------------------------->
+            <input type="radio" id="signature_info" name="form_tabs">
+            <label for="signature_info">
+                <img src="{{ url_for('static', filename='images/pt ino.jpg') }}" alt="Patient information logo">
+                <div>Signature</div>
+            </label>
+            <div class="tab">
+                <h2>Signature</h2>
+                <!-- Signature content here -->
+
+                <button type="submit">Submit Report</button>
+            </div>
+
+        </div> <!-- End of form tabs -->
+
+    </form>
+
+    <!-- External JS link -->
+    <script src="{{ url_for('static', filename='ehr_form.js') }}" async defer></script>
+</body>
+
+</html>

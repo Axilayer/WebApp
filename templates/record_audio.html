@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record & Upload Audio</title>
+    <!-- Add FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 450px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .icon-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            font-size: 24px;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .icon-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #startRecord { background-color: #28a745; }
+        #stopRecord { background-color: #dc3545; }
+        #playAudio { background-color: #007bff; }
+        #saveAudio { background-color: #ff9800; }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        #transcribeAudio { background-color: #17a2b8; color: white; }
+        #downloadTranscribeAudio { background-color: #a7a2f8; color: white; }
+
+        audio {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 10px auto;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .icon-btn {
+                font-size: 20px;
+                padding: 8px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Record, Upload, & Transcribe Audio</h1>
+
+        <!-- RECORD AUDIO -->
+        <button id="startRecord" class="icon-btn" title="Start Recording">
+            <i class="fas fa-microphone"></i>
+        </button>
+        <button id="stopRecord" class="icon-btn" title="Stop Recording" disabled>
+            <i class="fas fa-stop"></i>
+        </button>
+        <button id="playAudio" class="icon-btn" title="Play Audio" disabled>
+            <i class="fas fa-play"></i>
+        </button>
+        <button id="saveAudio" class="icon-btn" title="Save Audio" disabled>
+            <i class="fas fa-save"></i>
+        </button>
+
+        <!-- PLAY AUDIO -->
+        <audio id="audioPlayback" controls></audio>
+
+        <!-- UPLOAD AUDIO -->
+        <form action="/upload_audio" method="POST" enctype="multipart/form-data">
+            <input type="file" name="audio">
+            <button id="uploadAudio" class="btn" type="submit">Upload Audio</button>
+        </form>
+        <!-- Status Message -->
+        <div id="statusMessage" style="margin-top: 10px; font-size: 16px; color: green;"></div>
+
+        <!-- TRANSCRIBE AUDIO -->
+        <form action="/transcribe_audio" method="POST">
+            <button id="transcribeAudio" class="btn" type="submit">Transcribe Audio</button>
+        </form>
+
+        <!-- DOWNLOAD AND TRANSCRIBE AUDIO-->
+        <form action="/download_transcribe_audio" method="POST">
+            <button id="downloadTranscribeAudio" class="btn" type="submit">Download + Transcribe Audio</button>
+        </form>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+        let audioURL;
+
+        const startButton = document.getElementById("startRecord");
+        const stopButton = document.getElementById("stopRecord");
+        const playButton = document.getElementById("playAudio");
+        const saveButton = document.getElementById("saveAudio");
+        const audioPlayer = document.getElementById("audioPlayback");
+
+        startButton.addEventListener("click", startRecording);
+        stopButton.addEventListener("click", stopRecording);
+        playButton.addEventListener("click", playAudio);
+        saveButton.addEventListener("click", saveRecording);
+
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+
+                    mediaRecorder.addEventListener("dataavailable", event => {
+                        audioChunks.push(event.data);
+                    });
+
+                    mediaRecorder.addEventListener("stop", () => {
+                        audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+                        audioURL = URL.createObjectURL(audioBlob);
+                        audioPlayer.src = audioURL;
+
+                        playButton.disabled = false;
+                        saveButton.disabled = false;
+                    });
+
+                    startButton.disabled = true;
+                    stopButton.disabled = false;
+                });
+        }
+
+        function stopRecording() {
+            mediaRecorder.stop();
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        }
+
+        function playAudio() {
+            audioPlayer.play();
+        }
+
+        function saveRecording() {
+            const formData = new FormData();
+            formData.append("audio", audioBlob, "recording.wav");
+
+            fetch("/save_audio", {
+                method: "POST",
+                body: formData
+            }).then(response => response.text())
+              .then(data => alert(data));
+        }
+
+        document.getElementById("uploadForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(this); // Create FormData from the form
+        const statusMessage = document.getElementById("statusMessage");
+
+        fetch("/upload_audio", {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    statusMessage.textContent = data.message; // Show success message
+                    statusMessage.style.color = "green";
+                } else {
+                    statusMessage.textContent = data.message; // Show error message
+                    statusMessage.style.color = "red";
+                }
+            })
+            .catch((error) => {
+                statusMessage.textContent = "An error occurred while uploading the audio.";
+                statusMessage.style.color = "red";
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>

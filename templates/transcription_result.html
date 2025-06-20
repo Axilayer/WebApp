@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcription Result</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .transcription-box {
+            background: #e8e8e8;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            word-wrap: break-word;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 15px 5px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .copy-btn { background-color: #007bff; color: white; }
+        .home-btn { background-color: #28a745; color: white; }
+        
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Transcription Result</h1>
+
+        <!-- Labels Section -->
+        <div class="label-container">
+            {% for label, color in col_dict_med.items() %}
+                <span class="label" style="background-color: {{ color }}">{{ label }}</span>
+            {% endfor %}
+            {% for label, color in col_dict_ner.items() %}
+                <span class="label" style="background-color: {{ color }}">{{ label }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="transcription-box" id="{{ transcript}}">{{ transcript|safe}}</div>
+
+        <button class="btn copy-btn" onclick="copyText()">Copy Text</button>
+        <a href="/" class="btn home-btn">Return Home</a>
+    </div>
+
+    <script>
+        function copyText() {
+            const transcriptionText = document.getElementById("transcription").innerText;
+            navigator.clipboard.writeText(transcriptionText).then(() => {
+                alert("Transcription copied to clipboard!");
+            });
+        }
+    </script>
+</body>
+</html>

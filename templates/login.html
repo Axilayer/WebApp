@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Axilayer Login Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
+</head>
+
+<body>
+    <!--Contain welcome messages-->
+    <section class="container_left">
+        <h1 id="msg">
+            Thank you for your service to our society!
+        </h1>
+    </section>
+
+    <!--Log in visuals-->
+    <section class="container_right">
+        <h1 class="company_name">
+            Axilayer Technology
+        </h1>
+        <h3 class="ent_log">
+            Enter your login credentials
+        </h3>
+
+        <form action="{{ url_for('login') }}" method="POST">
+            <label for="username">
+                Username
+            </label>
+            <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+
+            <label for="password">
+                Password
+            </label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+            <div class="wrap">
+                <a href="{{ url_for('dashboard') }}">
+                    <div class="login_btn">Log in</div>
+                </a>
+            </div>
+
+            <p class="help_log">Log issue?
+                <a href="#" style="text-decoration: none;">
+                    <span>Help</span>
+                </a>
+            </p>
+    </section>
+
+    <script src="{{ url_for('static', filename='app.js') }}" async defer></script>
+</body>
+</html>
