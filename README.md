@@ -1,3 +1,7 @@
+python app.py
+
+Open https://127.0.0.1:5050
+
 Use admin as both email and password to signin.
 Click on EHR and then Create Record and then Narrative.
 Click on Record, Upload, and Transcribe Audio.
